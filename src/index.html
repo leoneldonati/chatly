@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App</title>
+
+    <style>
+      *,
+      *::after,
+      *::before {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        height: 100dvh;
+        max-width: 430px;
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+      }
+
+      .chat {
+        flex: 1;
+      }
+      .form {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        border: 2px solid #333;
+        gap: 10px;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      .input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 0;
+        border: none;
+
+        &:focus {
+          border: none;
+        }
+      }
+      .button {
+        padding: 10px;
+        border-radius: none;
+        background-color: rgb(71, 174, 223);
+        color: #fff;
+      }
+
+      .chat {
+        padding: 5px 10px;
+        display: flex;
+        flex-flow: column;
+        gap: 5px;
+      }
+
+      .chat-card {
+        border: 1px solid #ef1;
+        border-top-right-radius: none;
+        border-radius: 10px;
+        padding: 9px 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat"></div>
+    <form class="form">
+      <input type="text" name="msg" id="msg" class="input" placeholder="Escribe tu mensaje..." />
+
+      <button class="button">Enviar</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      socket.emit("notification", "CONECTADO");
+
+      const form = document.querySelector(".form");
+      const chat = document.querySelector(".chat");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const { msg } = Object.fromEntries(new FormData(e.target));
+
+        if(msg === '') return
+        socket.emit("message", msg);
+
+
+        chat.insertAdjacentHTML("beforeend", `<p class="chat-card">${msg}</p>`);
+      });
+    </script>
+  </body>
+</html>
