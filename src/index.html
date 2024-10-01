@@ -82,6 +82,8 @@
 
       const form = document.querySelector(".form");
       const chat = document.querySelector(".chat");
+
+      
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         const { msg } = Object.fromEntries(new FormData(e.target));
