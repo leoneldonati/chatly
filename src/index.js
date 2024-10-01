@@ -39,5 +39,6 @@ server.listen(port, () => console.log({
   },
   db: {
     dbName: client.db('we-chat').databaseName
-  }
+  },
+  url: import.meta.url
 }));
