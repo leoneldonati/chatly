@@ -89,6 +89,8 @@
         const { msg } = Object.fromEntries(new FormData(e.target));
 
         if(msg === '') return
+
+        
         socket.emit("message", msg);
 
 
